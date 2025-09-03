@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getToken, logout } from './auth'
+import { getAccessToken, logout } from './auth'
 
 class ApiClient {
   private client: AxiosInstance
@@ -16,7 +16,7 @@ class ApiClient {
     // Request interceptor to add auth token
     this.client.interceptors.request.use(
       (config) => {
-        const token = getToken()
+        const token = getAccessToken()
         if (token) {
           config.headers.Authorization = `Bearer ${token}`
         }
@@ -114,7 +114,7 @@ class ApiClient {
 
   // WebSocket connection helper
   createWebSocket(path: string): WebSocket {
-    const token = getToken()
+    const token = getAccessToken()
     const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000'
     const url = `${wsUrl}${path}${token ? `?token=${token}` : ''}`
     return new WebSocket(url)

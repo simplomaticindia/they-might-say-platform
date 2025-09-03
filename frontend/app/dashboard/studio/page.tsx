@@ -43,6 +43,8 @@ interface Episode {
   status: string
   created_at: string
   beat_count: number
+  total_citations: number
+  metadata?: any
 }
 
 export default function StudioModePage() {
